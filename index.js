@@ -1,7 +1,8 @@
 const express = require('express')
+const logger = require('./src/util/utils').logger;
 const userRoutes = require('./src/routes/user.routes');
 const app = express()
-const port = 3000
+const port = process.env.PORT || 3000;
 app.use(express.json())
 const mysql = require('mysql2');
 
@@ -45,30 +46,30 @@ app.post('/api/user', (req, res) => {
 });
 
 //UC-202 Opvragen overzicht van users
-app.get('/api/user', (req, res) => {
+// app.get('/api/user', (req, res) => {
 
-  const searchCriteria = req.query.search || {};
+//   const searchCriteria = req.query.search || {};
 
 
-  if (Object.keys(searchCriteria).length > 0) {
+//   if (Object.keys(searchCriteria).length > 0) {
 
-    const filteredUsers = database.users.filter(user => {
-      return Object.keys(searchCriteria).every(key => {
-        return user[key] === searchCriteria[key];
-      });
-    });
-    return res.status(200).json(filteredUsers);
-  } else {
+//     const filteredUsers = database.users.filter(user => {
+//       return Object.keys(searchCriteria).every(key => {
+//         return user[key] === searchCriteria[key];
+//       });
+//     });
+//     return res.status(200).json(filteredUsers);
+//   } else {
 
-    let usersToReturn = database.users;
+//     let usersToReturn = database.users;
 
-    if (req.query.active !== undefined) {
-      usersToReturn = database.users.filter(user => user.active === (req.query.active === 'true'));
-    }
+//     if (req.query.active !== undefined) {
+//       usersToReturn = database.users.filter(user => user.active === (req.query.active === 'true'));
+//     }
 
-    return res.status(200).json(usersToReturn);
-  }
-});
+//     return res.status(200).json(usersToReturn);
+//   }
+// });
 
 //UC-203 Opvragen van gebruikersprofiel
 app.get('/api/user/profile', (req, res) => {
